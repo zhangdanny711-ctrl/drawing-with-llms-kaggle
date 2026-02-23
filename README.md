@@ -1,62 +1,48 @@
 # Drawing with LLMs — Kaggle Solution
 
 ## Overview
-This project is a solution to the Kaggle **"Drawing with LLMs"** competition, where the goal is to generate images (SVG/bitmap) from text prompts and evaluate their semantic alignment using vision-language models.
+This project is a solution to the Kaggle "Drawing with LLMs" competition, where the goal is to generate images from text prompts and evaluate how well they match semantic descriptions using automated scoring systems.
 
-## Problem
-Participants must generate images that best match a given textual description. The generated outputs are evaluated based on how well they align with multiple-choice question-answer pairs using automated scoring systems.
-
----
+## Competition Description
+In this competition, participants generate images based on textual descriptions and aim to align them with multiple-choice question-answer pairs. The evaluation measures how well generated images match the expected answers using automated similarity scoring methods (such as CLIP-style evaluation). The task combines generative modeling and evaluation pipeline design.
 
 ## Approach
 
-### 1. Data Processing
-- Loaded competition data (`train.csv`, question-answer pairs)
-- Structured QA pairs into grouped format for evaluation
+### Image Generation
+- Used Stable Diffusion XL (DreamShaper XL Turbo) to generate images from prompts
+- Built a controlled generation pipeline for consistent outputs
 
-### 2. Image Generation
-- Used **Stable Diffusion XL (DreamShaper XL Turbo)** via `diffusers`
-- Generated bitmap images from text prompts
+### Prompt Engineering
+- Designed structured prompts to guide generation:
+  - prefix: "vector"
+  - suffix: "flat color blocks, minimal details"
+  - negative prompts to suppress unwanted features
+- Improved alignment between generated images and evaluation metrics
 
-### 3. Prompt Engineering
-- Designed structured prompts:
-  - Prefix: `"vector"`
-  - Suffix: `"flat color blocks, minimal details"`
-  - Negative prompts to suppress unwanted features
-- Improved generation quality and consistency
+### Scoring Pipeline
+- Implemented a custom scoring function:
+  - resized generated images
+  - compared outputs against multiple-choice answers
+  - used similarity-based evaluation
 
-### 4. Scoring Mechanism
-- Implemented custom scoring function:
-  - Resized generated images
-  - Compared outputs against multiple-choice answers
-  - Used similarity-based evaluation (CLIP-style scoring)
-
-### 5. End-to-End Pipeline
-Text Prompt → Diffusion Model → Generated Image → Scoring → Selection
-
----
+### End-to-End System
+Text Prompt -> Diffusion Model -> Generated Image -> Scoring -> Selection
 
 ## Results
-- **Best Private Score:** 0.68109
-- Iterative improvement through prompt tuning and model selection
-
----
+- Best Private Score: 0.68109
+- Achieved through iterative prompt tuning and pipeline optimization
 
 ## Tech Stack
 - Python
 - PyTorch
 - Diffusers (Stable Diffusion XL)
-- CLIP-style evaluation
+- Vision-language evaluation methods
 - Pandas / NumPy
 
----
-
-## Key Insights
-- Prompt engineering significantly impacts generation quality
-- Diffusion models require style constraints to align with evaluation metrics
-- Scoring pipeline design is as important as generation
-
----
+## Key Takeaways
+- Prompt engineering plays a critical role in generative tasks
+- Evaluation pipeline design is as important as model selection
+- Diffusion models require structured prompting to produce usable outputs
 
 ## Notes
-- No competition data is included in this repository
+- This repository contains only code (no competition data)
